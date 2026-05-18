@@ -62,8 +62,7 @@ function CourseDetails() {
     setIsActive(
       !isActive.includes(id)
         ? isActive.concat([id])
-        // eslint-disable-next-line eqeqeq
-        : isActive.filter((e) => e !== id)
+        : isActive.filter((e) => e != id)
     )
   }
 
@@ -89,7 +88,7 @@ function CourseDetails() {
   }
 
   const {
-    _id: courseid,
+    _id: course_id,
     courseName,
     courseDescription,
     thumbnail,
