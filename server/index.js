@@ -27,11 +27,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
 	cors({
-<<<<<<< HEAD
-		origin: "*",
-=======
 		origin: ["http://localhost:3000", "https://study-notion-frontend-nine-kohl.vercel.app"],
->>>>>>> fc78bdc (fix: add vercel url to cors)
 		credentials: true,
 	})
 );
