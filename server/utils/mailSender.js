@@ -1,40 +1,43 @@
-const nodemailer = require("nodemailer")
+const axios = require("axios")
 
 const mailSender = async (email, title, body) => {
   try {
     console.log("Sending OTP to:", email)
 
-    // Create transporter
-    let transporter = nodemailer.createTransport({
-      host: "smtp-relay.brevo.com",
-      port: 587,
-      secure: false,
-      requireTLS: true,
+    const response = await axios.post(
+      "https://api.brevo.com/v3/smtp/email",
+      {
+        sender: {
+          name: "StudyNotion",
+          email: "studynotionotp@gmail.com",
+        },
 
-      auth: {
-        user: process.env.MAIL_USER,
-        pass: process.env.MAIL_PASS,
+        to: [
+          {
+            email: email,
+          },
+        ],
+
+        subject: title,
+        htmlContent: body,
       },
+      {
+        headers: {
+          accept: "application/json",
+          "api-key": process.env.BREVO_API_KEY,
+          "content-type": "application/json",
+        },
+      }
+    )
 
-      connectionTimeout: 60000,
-      greetingTimeout: 30000,
-      socketTimeout: 60000,
-    })
-
-    // Send Mail
-    let info = await transporter.sendMail({
-      from: `"StudyNotion" <studynotionotp@gmail.com>`,
-      to: `${email}`,
-      subject: `${title}`,
-      html: `${body}`,
-    })
-
-    console.log("Email sent:", info.response)
-    console.log("Message ID:", info.messageId)
-
-    return info
+    console.log("Email sent successfully")
+    return response.data
   } catch (error) {
-    console.log("Mail Error:", error.message)
+    console.log(
+      "Brevo Email Error:",
+      error.response?.data || error.message
+    )
+
     throw error
   }
 }
