@@ -13,9 +13,6 @@ Built with scalability, performance, and real-world deployment practices in mind
 ## Frontend
 https://studynotiontech.vercel.app
 
-## Backend API
-https://your-render-backend-url.onrender.com
-
 ---
 
 # ✨ Features
